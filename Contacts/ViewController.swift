@@ -8,14 +8,16 @@
 
 import UIKit
 
-class ViewController: UICollectionViewController {
+class ViewController: UIViewController {
 
+    @IBOutlet var collectionView: UICollectionView!
+    let collectionDataSource = ContactsDataSource()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        collectionView.dataSource = collectionDataSource
     }
 
-    @IBOutlet var collectionView: UICollectionView!
-    let collectionDataSource = CollectionDataSource()
 }
 
