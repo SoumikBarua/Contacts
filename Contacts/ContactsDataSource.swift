@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ContactsDataSource: NSObject, UICollectionViewDataSource {
+class ContactsDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let contacts = [Contacts]()
+    var contacts = [Contacts]()
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return contacts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

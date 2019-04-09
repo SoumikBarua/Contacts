@@ -61,6 +61,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="eeN-6o-vwo" id="mY7-sW-2LF"/>
+                        <outlet property="tablewView" destination="RYW-jw-l2U" id="BGC-OT-lC2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

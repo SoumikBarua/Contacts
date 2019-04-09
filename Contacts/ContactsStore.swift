@@ -66,7 +66,7 @@ class ContactsStore {
             let introduction = json["introduction"] as? String else {
                 return nil
         }
-        print("Came to creating contacts")
+        //print("Came to creating contacts")
         return Contacts(firstName: firstName, lastName: lastName, fileName: fileName, title: title, introduction: introduction)
     }
     
