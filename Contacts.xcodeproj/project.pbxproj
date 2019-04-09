@@ -12,7 +12,6 @@
 		3260E707224161F800AE5AA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3260E705224161F800AE5AA2 /* Main.storyboard */; };
 		3260E709224161FA00AE5AA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3260E708224161FA00AE5AA2 /* Assets.xcassets */; };
 		3260E70C224161FA00AE5AA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3260E70A224161FA00AE5AA2 /* LaunchScreen.storyboard */; };
-		3260E71422416D4D00AE5AA2 /* ContactsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3260E71322416D4D00AE5AA2 /* ContactsDataSource.swift */; };
 		3260E71622416DB800AE5AA2 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3260E71522416DB800AE5AA2 /* Contacts.swift */; };
 		32A30FEB225BD1130028A862 /* ContactsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A30FEA225BD1130028A862 /* ContactsStore.swift */; };
 /* End PBXBuildFile section */
@@ -25,7 +24,6 @@
 		3260E708224161FA00AE5AA2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3260E70B224161FA00AE5AA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3260E70D224161FA00AE5AA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3260E71322416D4D00AE5AA2 /* ContactsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDataSource.swift; sourceTree = "<group>"; };
 		3260E71522416DB800AE5AA2 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		32A30FEA225BD1130028A862 /* ContactsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,7 +60,6 @@
 			children = (
 				3260E701224161F800AE5AA2 /* AppDelegate.swift */,
 				3260E703224161F800AE5AA2 /* ViewController.swift */,
-				3260E71322416D4D00AE5AA2 /* ContactsDataSource.swift */,
 				3260E71522416DB800AE5AA2 /* Contacts.swift */,
 				32A30FEA225BD1130028A862 /* ContactsStore.swift */,
 				3260E705224161F800AE5AA2 /* Main.storyboard */,
@@ -148,7 +145,6 @@
 				3260E704224161F800AE5AA2 /* ViewController.swift in Sources */,
 				32A30FEB225BD1130028A862 /* ContactsStore.swift in Sources */,
 				3260E702224161F800AE5AA2 /* AppDelegate.swift in Sources */,
-				3260E71422416D4D00AE5AA2 /* ContactsDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

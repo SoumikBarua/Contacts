@@ -48,8 +48,8 @@ class ContactsStore {
                         completion(.success(self.allContacts))
                     }
                 }
-                catch let error {
-                    print("Received this error: \(error)")
+                catch let parsingError {
+                    print("Error parsing JSON data: \(parsingError)")
                 }
             } else {
                 return
