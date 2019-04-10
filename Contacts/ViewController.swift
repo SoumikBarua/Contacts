@@ -31,7 +31,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         // Setting up the cell sizes for both the collection view and the table view
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
-            layout.itemSize = CGSize(width: 150, height: self.collectionView.frame.height)
+            layout.itemSize = CGSize(width: self.collectionView.frame.width/5, height: self.collectionView.frame.height*0.75)
+            layout.minimumInteritemSpacing = 10
+            print("main view width:  \(view.frame.width) and collectionView frame width \(collectionView.frame.width) ")
+            layout.sectionInset.left = view.frame.width/2 - layout.itemSize.width/2
+            layout.sectionInset.right = layout.sectionInset.left
         }
         tableView.rowHeight = tableView.frame.height
         
@@ -62,7 +66,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UICollectionViewCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AvatarCollectionCell", for: indexPath) as! AvatarCollectionCell
+        cell.update(with: UIImage(named: "\(contacts[indexPath.item].firstName) \(contacts[indexPath.item].lastName).png"))
         return cell
     }
     
@@ -70,6 +75,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//        let cell = collectionView.cellForItem(at: indexPath) as! AvatarCollectionCell
+//        cell.imageView.layer.borderWidth = 2.0
+//        cell.imageView.layer.borderColor = UIColor.blue.cgColor
+//        cell.imageView.layer.cornerRadius = CGFloat((Float(cell.imageView.frame.size.width / 1.0)))
     }
     
     // MARK: - UITableViewDataSource methods
@@ -85,9 +95,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     
     // MARK: - UITableViewDelegate methods
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//    }
 
 }
 

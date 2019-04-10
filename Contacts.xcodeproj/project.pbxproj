@@ -14,6 +14,7 @@
 		3260E70C224161FA00AE5AA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3260E70A224161FA00AE5AA2 /* LaunchScreen.storyboard */; };
 		3260E71622416DB800AE5AA2 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3260E71522416DB800AE5AA2 /* Contacts.swift */; };
 		32A30FEB225BD1130028A862 /* ContactsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A30FEA225BD1130028A862 /* ContactsStore.swift */; };
+		32D80AF0225D49FD009F12B3 /* AvatarCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D80AEF225D49FD009F12B3 /* AvatarCollectionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		3260E70D224161FA00AE5AA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3260E71522416DB800AE5AA2 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		32A30FEA225BD1130028A862 /* ContactsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsStore.swift; sourceTree = "<group>"; };
+		32D80AEF225D49FD009F12B3 /* AvatarCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCollectionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				3260E701224161F800AE5AA2 /* AppDelegate.swift */,
 				3260E703224161F800AE5AA2 /* ViewController.swift */,
+				32D80AEF225D49FD009F12B3 /* AvatarCollectionCell.swift */,
 				3260E71522416DB800AE5AA2 /* Contacts.swift */,
 				32A30FEA225BD1130028A862 /* ContactsStore.swift */,
 				3260E705224161F800AE5AA2 /* Main.storyboard */,
@@ -102,6 +105,7 @@
 				TargetAttributes = {
 					3260E6FD224161F800AE5AA2 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -145,6 +149,7 @@
 				3260E704224161F800AE5AA2 /* ViewController.swift in Sources */,
 				32A30FEB225BD1130028A862 /* ContactsStore.swift in Sources */,
 				3260E702224161F800AE5AA2 /* AppDelegate.swift in Sources */,
+				32D80AF0225D49FD009F12B3 /* AvatarCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +303,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sb.Contacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -315,7 +320,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = sb.Contacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
