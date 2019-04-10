@@ -15,6 +15,7 @@
 		3260E71622416DB800AE5AA2 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3260E71522416DB800AE5AA2 /* Contacts.swift */; };
 		32A30FEB225BD1130028A862 /* ContactsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A30FEA225BD1130028A862 /* ContactsStore.swift */; };
 		32D80AF0225D49FD009F12B3 /* AvatarCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D80AEF225D49FD009F12B3 /* AvatarCollectionCell.swift */; };
+		32D80AF2225E3F8A009F12B3 /* AboutMeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D80AF1225E3F8A009F12B3 /* AboutMeTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3260E71522416DB800AE5AA2 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		32A30FEA225BD1130028A862 /* ContactsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsStore.swift; sourceTree = "<group>"; };
 		32D80AEF225D49FD009F12B3 /* AvatarCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCollectionCell.swift; sourceTree = "<group>"; };
+		32D80AF1225E3F8A009F12B3 /* AboutMeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				3260E701224161F800AE5AA2 /* AppDelegate.swift */,
 				3260E703224161F800AE5AA2 /* ViewController.swift */,
+				32D80AF1225E3F8A009F12B3 /* AboutMeTableCell.swift */,
 				32D80AEF225D49FD009F12B3 /* AvatarCollectionCell.swift */,
 				3260E71522416DB800AE5AA2 /* Contacts.swift */,
 				32A30FEA225BD1130028A862 /* ContactsStore.swift */,
@@ -145,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32D80AF2225E3F8A009F12B3 /* AboutMeTableCell.swift in Sources */,
 				3260E71622416DB800AE5AA2 /* Contacts.swift in Sources */,
 				3260E704224161F800AE5AA2 /* ViewController.swift in Sources */,
 				32A30FEB225BD1130028A862 /* ContactsStore.swift in Sources */,

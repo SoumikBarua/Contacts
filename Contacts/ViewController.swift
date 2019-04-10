@@ -12,6 +12,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
 
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var navigationBar: UINavigationBar!
     //let contactsDataSource = ContactsDataSource()
     var contactsStore: ContactsStore!
     var contacts = [Contacts]()
@@ -22,11 +23,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // Setting up the navigation bar and the status bar
+        navigationBar.topItem?.title = "Contacts"
+        view.backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        
         // Setting the data source and the delegate of both the collection view and the table view to this view controller
         collectionView.dataSource = self
         tableView.dataSource = self
         collectionView.delegate = self
         tableView.delegate = self
+        
+        // Setting up the percentage heights for the collection view and the table view
         
         // Setting up the cell sizes for both the collection view and the table view
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -37,7 +45,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
             layout.sectionInset.left = view.frame.width/2 - layout.itemSize.width/2
             layout.sectionInset.right = layout.sectionInset.left
         }
-        tableView.rowHeight = tableView.frame.height
+        tableView.rowHeight = tableView.bounds.maxY - tableView.bounds.minY
+        print("view frame height : \(view.frame.height) collectionView frame height \(collectionView.frame.height) tableView frame height \(tableView.frame.height) tableView row height \(tableView.rowHeight) navigationBar height \(navigationBar.frame.height) statusBar height \(statusBarView.frame.height)")
+        tableView.separatorStyle = .none
         
         // Retrieving the JSON information and passing it to the data source
         contactsStore.fetchJSON {
@@ -89,7 +99,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AboutMeTableCell", for: indexPath) as! AboutMeTableCell
+        let contact = contacts[indexPath.row]
+        cell.update(name: (contact.firstName + " " + contact.lastName), title: contact.title , intro: contact.introduction)
         return cell
     }
     
