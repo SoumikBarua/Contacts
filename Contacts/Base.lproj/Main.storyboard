@@ -44,24 +44,40 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1QT-0H-Lna">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ET2-98-m2c">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                        </imageView>
-                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="tlr-bS-m99">
-                                                            <rect key="frame" x="15" y="15" width="20" height="20"/>
-                                                        </activityIndicatorView>
+                                                            <subviews>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1QT-0H-Lna">
+                                                                    <rect key="frame" x="5" y="5" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" secondItem="1QT-0H-Lna" secondAttribute="width" id="4Ad-KH-dzD"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="tlr-bS-m99">
+                                                                    <rect key="frame" x="15" y="15" width="20" height="20"/>
+                                                                </activityIndicatorView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="1QT-0H-Lna" firstAttribute="centerY" secondItem="ET2-98-m2c" secondAttribute="centerY" id="2F4-dM-fKH"/>
+                                                                <constraint firstItem="1QT-0H-Lna" firstAttribute="leading" secondItem="ET2-98-m2c" secondAttribute="leading" constant="5" id="9Ze-Pr-fKS"/>
+                                                                <constraint firstItem="tlr-bS-m99" firstAttribute="centerX" secondItem="1QT-0H-Lna" secondAttribute="centerX" id="OfM-NM-KFo"/>
+                                                                <constraint firstAttribute="trailing" secondItem="1QT-0H-Lna" secondAttribute="trailing" constant="5" id="f8Z-3C-MXA"/>
+                                                                <constraint firstItem="tlr-bS-m99" firstAttribute="centerY" secondItem="1QT-0H-Lna" secondAttribute="centerY" id="h5b-cJ-cSl"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                 </view>
                                                 <constraints>
-                                                    <constraint firstItem="1QT-0H-Lna" firstAttribute="top" secondItem="ud9-wv-fT9" secondAttribute="top" id="5nn-kp-scW"/>
-                                                    <constraint firstItem="tlr-bS-m99" firstAttribute="centerY" secondItem="ud9-wv-fT9" secondAttribute="centerY" id="KTx-Vc-AMX"/>
-                                                    <constraint firstItem="1QT-0H-Lna" firstAttribute="leading" secondItem="ud9-wv-fT9" secondAttribute="leading" id="X60-kE-yaX"/>
-                                                    <constraint firstAttribute="bottom" secondItem="1QT-0H-Lna" secondAttribute="bottom" id="mEC-IJ-1bW"/>
-                                                    <constraint firstAttribute="trailing" secondItem="1QT-0H-Lna" secondAttribute="trailing" id="qoW-Rl-Jel"/>
-                                                    <constraint firstItem="tlr-bS-m99" firstAttribute="centerX" secondItem="ud9-wv-fT9" secondAttribute="centerX" id="z1y-7S-ALu"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ET2-98-m2c" secondAttribute="trailing" id="CTW-61-hKA"/>
+                                                    <constraint firstItem="ET2-98-m2c" firstAttribute="leading" secondItem="ud9-wv-fT9" secondAttribute="leading" id="OGm-OU-B0X"/>
+                                                    <constraint firstItem="ET2-98-m2c" firstAttribute="centerX" secondItem="ud9-wv-fT9" secondAttribute="centerX" id="Wgx-KY-PE0"/>
+                                                    <constraint firstItem="ET2-98-m2c" firstAttribute="centerY" secondItem="ud9-wv-fT9" secondAttribute="centerY" id="dc7-fu-XCX"/>
+                                                    <constraint firstItem="ET2-98-m2c" firstAttribute="height" secondItem="ud9-wv-fT9" secondAttribute="width" multiplier="1:1" id="tmU-VD-rtA"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="activityIndicator" destination="tlr-bS-m99" id="5A8-WF-1ZC"/>
+                                                    <outlet property="borderView" destination="ET2-98-m2c" id="dX6-rZ-F4U"/>
                                                     <outlet property="imageView" destination="1QT-0H-Lna" id="bGJ-oZ-VT1"/>
                                                 </connections>
                                             </collectionViewCell>
@@ -153,13 +169,14 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="eeN-6o-vwo" id="mY7-sW-2LF"/>
+                        <outlet property="containerView" destination="Kgc-Yv-oPF" id="ObC-c6-h8N"/>
                         <outlet property="navigationBar" destination="knv-sk-Lxu" id="VlC-Eb-aUO"/>
                         <outlet property="tableView" destination="RYW-jw-l2U" id="Ggr-0w-b0T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53.600000000000001" y="27.436281859070466"/>
+            <point key="canvasLocation" x="53.600000000000001" y="27.339901477832512"/>
         </scene>
     </scenes>
 </document>

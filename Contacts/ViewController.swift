@@ -13,7 +13,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var navigationBar: UINavigationBar!
-    //let contactsDataSource = ContactsDataSource()
+    @IBOutlet var containerView: UIView!
     var contactsStore: ContactsStore!
     var contacts = [Contacts]()
     
@@ -23,10 +23,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        // Setting up the navigation bar and the status bar
+        // Setting up the navigation bar title and adjusting the color of the status bar with view's background color
         navigationBar.topItem?.title = "Contacts"
         view.backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
-        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
         
         // Setting the data source and the delegate of both the collection view and the table view to this view controller
         collectionView.dataSource = self
@@ -34,22 +33,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         collectionView.delegate = self
         tableView.delegate = self
         
-        // Setting up the percentage heights for the collection view and the table view
-        
         // Setting up the cell sizes for both the collection view and the table view
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
-            layout.itemSize = CGSize(width: self.collectionView.frame.width/5, height: self.collectionView.frame.height*0.75)
-            layout.minimumInteritemSpacing = 10
+            layout.itemSize = CGSize(width: (self.collectionView.frame.width/5 + 1), height: self.collectionView.frame.height*0.75)
+            layout.minimumInteritemSpacing = 8
             print("main view width:  \(view.frame.width) and collectionView frame width \(collectionView.frame.width) ")
             layout.sectionInset.left = view.frame.width/2 - layout.itemSize.width/2
             layout.sectionInset.right = layout.sectionInset.left
         }
-        tableView.rowHeight = tableView.bounds.maxY - tableView.bounds.minY
-        print("view frame height : \(view.frame.height) collectionView frame height \(collectionView.frame.height) tableView frame height \(tableView.frame.height) tableView row height \(tableView.rowHeight) navigationBar height \(navigationBar.frame.height) statusBar height \(statusBarView.frame.height)")
+        tableView.rowHeight = tableView.frame.height //tableView.bounds.maxY - tableView.bounds.minY
         tableView.separatorStyle = .none
         
-        // Retrieving the JSON information and passing it to the data source
+        // Retrieving the JSON information and updating the collection view and table view
         contactsStore.fetchJSON {
             (contactsResult) -> Void in
             
@@ -65,6 +61,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
             }
             self.collectionView.reloadSections(IndexSet(integer: 0))
             self.tableView.reloadData()
+            self.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
         }
     }
     
@@ -86,10 +83,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//        let cell = collectionView.cellForItem(at: indexPath) as! AvatarCollectionCell
-//        cell.imageView.layer.borderWidth = 2.0
-//        cell.imageView.layer.borderColor = UIColor.blue.cgColor
-//        cell.imageView.layer.cornerRadius = CGFloat((Float(cell.imageView.frame.size.width / 1.0)))
     }
     
     // MARK: - UITableViewDataSource methods
@@ -100,8 +93,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AboutMeTableCell", for: indexPath) as! AboutMeTableCell
-        let contact = contacts[indexPath.row]
-        cell.update(name: (contact.firstName + " " + contact.lastName), title: contact.title , intro: contact.introduction)
+        cell.update(contacts[indexPath.row])
         return cell
     }
     
@@ -110,6 +102,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
 //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 //        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 //    }
+    
+    // MARK: - UIScrollViewDelegate methods
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if scrollView is UITableView {
+            guard var scrollingToIndexPath = tableView.indexPathForRow(at: CGPoint(x: 0, y: targetContentOffset.pointee.y)) else {
+                return
+            }
+            var scrollingToRect = tableView.rectForRow(at: scrollingToIndexPath)
+            let roundingRow = Int(((targetContentOffset.pointee.y - scrollingToRect.origin.y) / scrollingToRect.size.height).rounded())
+            scrollingToIndexPath.row += roundingRow
+            scrollingToRect = tableView.rectForRow(at: scrollingToIndexPath)
+            targetContentOffset.pointee.y = scrollingToRect.origin.y
+        }
+        
+    }
 
 }
 

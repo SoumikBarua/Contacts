@@ -12,6 +12,23 @@ class AvatarCollectionCell: UICollectionViewCell {
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var borderView: UIView!
+    
+    // Check to see if a cell was selected
+    override var isSelected: Bool {
+        didSet {
+            if self.isSelected {
+                // Selected cell should have a circuler border around the avatar
+                borderView.layer.borderColor = UIColor(red: 203/255, green: 224/255, blue: 242/255, alpha: 1.0).cgColor
+                borderView.layer.cornerRadius = self.borderView.frame.width/2
+                borderView.layer.borderWidth = 5
+            } else {
+                // Get rid of the border if not selected
+                borderView.layer.borderColor = UIColor.clear.cgColor
+            }
+        }
+    }
+
     
     func update(with image: UIImage?) {
         if let imageToDisplay = image {
