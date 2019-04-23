@@ -10,6 +10,8 @@ This app was created to learn about **UIScrollViewDelegate** methods and the beh
 
 This GIF shows the app in action.
 
+! [Walkthrough GIF] (walkthrough.gif)
+
 ## Lessons Learned
 
 1. **UICollectionView** and **UITableView** both inherit from **UIScrollView**. Also, both of their delegates inherit from **UIScrollViewDelegate**
