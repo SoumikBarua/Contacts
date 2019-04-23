@@ -10,7 +10,7 @@ This app was created to learn about **UIScrollViewDelegate** methods and the beh
 
 This GIF shows the app in action.
 
-! [Walkthrough GIF] (walkthrough.gif)
+![Walkthrough](walkthrough.gif)
 
 ## Lessons Learned
 
