@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDataSource, UITableViewDataSource, UICollectionViewDelegate, UITableViewDelegate {
+class ViewController: UIViewController {
 
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var navigationBar: UINavigationBar!
     @IBOutlet var containerView: UIView!
     var contactsStore: ContactsStore!
-    var contacts = [Contacts]()
+    let contactsDataSource = ContactsDataSource()
     var onTapSelectItem = true
     var tableViewScroll = false
     
@@ -30,8 +30,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         view.backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
         
         // Setting the data source and the delegate of both the collection view and the table view to this view controller
-        collectionView.dataSource = self
-        tableView.dataSource = self
+        collectionView.dataSource = contactsDataSource
+        tableView.dataSource = contactsDataSource
         collectionView.delegate = self
         tableView.delegate = self
         
@@ -46,6 +46,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         tableView.rowHeight = tableView.frame.height //tableView.bounds.maxY - tableView.bounds.minY
         tableView.separatorStyle = .none
         
+        updateDataSource()
+    }
+    
+    private func updateDataSource() {
         // Retrieving the JSON information and updating the collection view and table view
         contactsStore.fetchJSON {
             (contactsResult) -> Void in
@@ -53,33 +57,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
             switch contactsResult {
             case let .success(contacts):
                 print("Successfully found \(contacts.count) contacts")
-                //self.contactsDataSource.contacts = contacts
-                self.contacts = contacts
+                self.contactsDataSource.contacts = contacts
             case let .failure(error):
                 print("Error retrieving contacts: \(error)")
-                //self.contactsDataSource.contacts.removeAll()
-                self.contacts.removeAll()
+                self.contactsDataSource.contacts.removeAll()
             }
             self.collectionView.reloadSections(IndexSet(integer: 0))
             self.tableView.reloadData()
             self.collectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .centeredHorizontally)
         }
     }
-    
-    
-    // MARK: - UICollectionViewDataSource methods
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return contacts.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AvatarCollectionCell", for: indexPath) as! AvatarCollectionCell
-        cell.update(with: UIImage(named: "\(contacts[indexPath.item].firstName) \(contacts[indexPath.item].lastName).png"))
-        return cell
-    }
-    
-    // MARK: - UICollectionViewDelegate methods
+}
+
+
+// MARK: - UICollectionViewDelegate methods
+
+extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         onTapSelectItem = true
@@ -87,20 +80,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
+}
+
+// MARK: - UITableViewDelegate methods
+
+extension ViewController: UITableViewDelegate {
+    // No table view delegate methods needed
+}
+
+// MARK: - UIScrollViewDelegate methods
+
+extension ViewController {
+    // Both UICollectionViewDelegate and UITableViewDelegate inherit from UIScrollViewDelegate
     
-    // MARK: - UITableViewDataSource methods
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contacts.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AboutMeTableCell", for: indexPath) as! AboutMeTableCell
-        cell.update(contacts[indexPath.row])
-        return cell
-    }
-    
-    // MARK: - UIScrollViewDelegate methods
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView is UITableView {
@@ -118,7 +110,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         if scrollView is UICollectionView {
             // Item snapping for the collection view
             
-            // Determine the closest item number by comparing the targetContentOffset to the current layout's item size and item spacing
+            // Determine the closest item number by comparing the targetContentOffset to the current layout's item size and line spacing
             let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
             let approximateItemNumber = Int((targetContentOffset.pointee.x / (layout.itemSize.width + layout.minimumLineSpacing)).rounded())
             // Find the approximate item's frame
