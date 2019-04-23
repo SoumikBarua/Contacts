@@ -16,6 +16,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     @IBOutlet var containerView: UIView!
     var contactsStore: ContactsStore!
     var contacts = [Contacts]()
+    var onTapSelectItem = true
+    var tableViewScroll = false
     
     // MARK: - View life cycle
     
@@ -33,15 +35,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         collectionView.delegate = self
         tableView.delegate = self
         
-        // Setting up the cell sizes for both the collection view and the table view
+        // Setting up the view properties for both the collection view and the table view
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
             layout.itemSize = CGSize(width: (self.collectionView.frame.width/5 + 1), height: self.collectionView.frame.height*0.75)
-            layout.minimumInteritemSpacing = 8
-            print("main view width:  \(view.frame.width) and collectionView frame width \(collectionView.frame.width) ")
             layout.sectionInset.left = view.frame.width/2 - layout.itemSize.width/2
             layout.sectionInset.right = layout.sectionInset.left
         }
+        collectionView.showsHorizontalScrollIndicator = false
         tableView.rowHeight = tableView.frame.height //tableView.bounds.maxY - tableView.bounds.minY
         tableView.separatorStyle = .none
         
@@ -81,7 +82,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
     // MARK: - UICollectionViewDelegate methods
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        onTapSelectItem = true
+        tableViewScroll = false
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
@@ -97,27 +100,68 @@ class ViewController: UIViewController, UICollectionViewDataSource, UITableViewD
         return cell
     }
     
-    // MARK: - UITableViewDelegate methods
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//    }
-    
     // MARK: - UIScrollViewDelegate methods
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         if scrollView is UITableView {
-            guard var scrollingToIndexPath = tableView.indexPathForRow(at: CGPoint(x: 0, y: targetContentOffset.pointee.y)) else {
-                return
-            }
-            var scrollingToRect = tableView.rectForRow(at: scrollingToIndexPath)
-            let roundingRow = Int(((targetContentOffset.pointee.y - scrollingToRect.origin.y) / scrollingToRect.size.height).rounded())
-            scrollingToIndexPath.row += roundingRow
-            scrollingToRect = tableView.rectForRow(at: scrollingToIndexPath)
+            // Row snapping for the table view
+            
+            // Determine the closest row number by comparing the targetContentOffset to the table view's row height
+            let approximateRowNumber = Int(((targetContentOffset.pointee.y) / (tableView.rowHeight)).rounded())
+            // Find the approximate row's frame
+            let scrollingToRect = tableView.rectForRow(at: IndexPath(row: approximateRowNumber, section: 0))
+            // Set the rounded offset
             targetContentOffset.pointee.y = scrollingToRect.origin.y
+            
+            collectionView.selectItem(at: IndexPath(item: approximateRowNumber, section: 0), animated: true, scrollPosition: .centeredHorizontally)
         }
-        
+        if scrollView is UICollectionView {
+            // Item snapping for the collection view
+            
+            // Determine the closest item number by comparing the targetContentOffset to the current layout's item size and item spacing
+            let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+            let approximateItemNumber = Int((targetContentOffset.pointee.x / (layout.itemSize.width + layout.minimumLineSpacing)).rounded())
+            // Find the approximate item's frame
+            let scrollingToRect = collectionView.layoutAttributesForItem(at: IndexPath(item: approximateItemNumber, section: 0))?.frame
+            // Set the rounded offset
+            targetContentOffset.pointee.x = (scrollingToRect?.origin.x)! - layout.sectionInset.left
+        }
     }
-
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView is UICollectionView {
+            // To highlight the collection view cells during a scroll (ignore if an individual cell is tapped)
+            if !onTapSelectItem {
+                // Find layout information to compare to current offset
+                let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+                let approximateItemNumber = Int((scrollView.contentOffset.x / (layout.itemSize.width + layout.minimumLineSpacing)).rounded())
+                // Set the approximate item to be highlighted
+                collectionView.selectItem(at: IndexPath(item: approximateItemNumber, section: 0), animated: false, scrollPosition: [])
+                
+                // Set this table view offset only when the collection view is scrolled
+                // (allowing this during a table view scroll will add extra unwanted offset)
+                if !tableViewScroll {
+                    tableView.contentOffset.y = (scrollView.contentOffset.x) * (tableView.rowHeight) / (layout.itemSize.width + layout.minimumLineSpacing)
+                }
+            }
+        } else if scrollView is UITableView {
+            if tableViewScroll {
+                let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+                collectionView.contentOffset.x = (scrollView.contentOffset.y) * (layout.itemSize.width + layout.minimumLineSpacing) / (tableView.rowHeight)
+            }
+        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if scrollView is UICollectionView {
+            // Drag (instead of item tap) occurred was in collection view
+            onTapSelectItem = false
+            tableViewScroll = false
+        } else {
+            // Drag occurred in table view
+            onTapSelectItem = false
+            tableViewScroll = true
+        }
+    }
 }
 
