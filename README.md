@@ -21,3 +21,19 @@ This GIF shows the app in action.
 5. Use  the **scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)** method to adjust where a scroll view will land.
 6. A view of the same height and width could be made circular using it's **layer.cornerRadius** property.
 7. To disable a view's layer animation, use **CATransaction** class.
+
+## License
+
+    Copyright 2019 Soumik Barua
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
